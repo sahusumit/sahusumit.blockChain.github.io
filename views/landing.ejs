@@ -1,0 +1,133 @@
+<% include ./partials/header %>
+
+
+<h1 class="heading">ORGAN CHAIN</h1>
+
+
+
+<div class="col">
+	<div class="row">
+
+
+	<div>
+			
+			<% organChain.chain.forEach(function(block) { %>
+			<div class="chain">
+					<h2 class="font-family">CHAIN </h2>
+
+				<p>
+					Index: <%= block.index %>
+				</p>
+				<p>
+					Timestamp: <%= block.timestamp %>
+				</p>
+				<p>
+					Nonce : <%= block.nonce %>
+				</p>
+				<p>
+					Hash : <%= block.hash %>
+				</p>			
+				<p>
+					Previous Block Hash : <%= block.previousBlockHash %>
+				</p>
+				<div>
+					<p>
+						Transactions:
+					</p>
+					<div>
+							<% block.transactions.forEach(function(transaction) { %>
+	
+								<p class="patient1">
+									Patient list: <% if(transaction.patientList.length>0) { %>
+										<% transaction.patientList.forEach(function(patient) { %>
+											<p class="patient2">
+												<%= patient %>
+											</p>
+										<% }) %>
+									<% } %>
+								</p>
+								<p class="patient1">
+									Id: <%= transaction.transactionId %>
+								</p>
+	
+							<% }) %>
+					</div>
+				</div>
+			</div>
+			<% }) %>
+	
+	</div>
+	
+	<div class="pending-chain">
+			<h2 class="font-family"> PENDING TRANSACTIONS </h2>
+			<% if(organChain.pendingTransactions.length>0) { %>
+				<p class="patient1">
+					PatientList:
+				
+				<% organChain.pendingTransactions[0].patientList.forEach(function(patient) { %>
+					<p class="patient2">
+							<%= patient %>
+					</p>
+				<%	}) %>
+				<p class="patient1">
+					Transaction Id:
+				</p>
+				<p class="patient2">
+						<%= organChain.pendingTransactions[0].transactionId  %>
+				</p>
+			</p>
+				<form action="/mine" method="GET">
+						<button class="button">
+								Mine
+						</button>
+				</form>
+	
+	
+			<% } else { %>
+				<span>Empty</span>
+			<% } %> 
+	</div>
+	</div>
+	
+	<div>
+			<h2 class="font-family"> CURRENT NODE URL </h2>
+			<%= organChain.currentNodeUrl %>
+	</div>
+		
+	<div>
+			<h2 class="font-family"> NETWORK NODES </h2>
+			<% if(organChain.networkNodes.length>0) { %>
+
+				<% organChain.networkNodes.forEach(function(node) { %>
+					
+					<%= node %>
+
+				<% }) %>
+
+			<% } else { %>
+				<span>Empty</span>
+			<% } %> 
+	</div>
+
+</div>
+
+<div>
+		<h3>
+			Add or Remove patients using patient id
+		</h3>
+			<a class="links" href="/addPatients"> Add patients </a>
+			<a class="links" href="/removePatients"> Remove patients </a>
+			<a class="links" href="/addNode">Add a node </a>
+	</div>
+	
+	<form action="/consensus" method="get">
+		<h3>
+			Check for update:
+		</h3>
+		<button class="button">
+			Update
+		</button>
+	</form>
+
+
+<% include ./partials/footer %> 
